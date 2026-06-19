@@ -3,20 +3,1165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniPath Academic Intelligence Platform</title>
+<title>UniPath — One AI OS for Korean Science Universities</title>
 <style>
-  body { font-family: system-ui, sans-serif; margin: 0; background: #f9fafb; color: #111827; }
-  .hero { background: linear-gradient(135deg, #4F46E5, #7C3AED); color: #fff; text-align: center; padding: 120px 24px; }
-  h1 { font-size: 3rem; margin: 0 0 1rem; }
-  p { font-size: 1.25rem; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem; }
-  .cta { background: #fff; color: #4F46E5; padding: 16px 40px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1.1rem; }
+:root {
+  --color-primary:      #0A0E1A;
+  --color-secondary:    #1C2340;
+  --color-accent:       #4DFFA3;
+  --color-bg:           #06090F;
+  --color-surface:      color-mix(in srgb, #06090F 88%, #E8EDF5 12%);
+  --color-surface-2:    color-mix(in srgb, #06090F 78%, #E8EDF5 22%);
+  --color-text:         #E8EDF5;
+  --color-muted:        color-mix(in srgb, #E8EDF5 62%, transparent);
+  --color-border:       color-mix(in srgb, #E8EDF5 14%, transparent);
+  --color-primary-tint: color-mix(in srgb, #0A0E1A 16%, #06090F);
+  --color-primary-ink:  color-mix(in srgb, #0A0E1A 78%, #ffffff 22%);
+  --color-accent-glow:  color-mix(in srgb, #4DFFA3 22%, transparent);
+  --font-headline:      'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body:          'Inter', system-ui, -apple-system, sans-serif;
+  --radius:             0.625rem;
+  --radius-lg:          1rem;
+  --shadow-sm:          0 1px 2px rgba(0,0,0,0.45);
+  --shadow-md:          0 6px 20px rgba(0,0,0,0.5);
+  --shadow-lg:          0 18px 50px rgba(0,0,0,0.6);
+  --transition:         250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 1; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2rem);
+}
+
+/* Typography */
+h1, h2, h3, h4 { font-family: var(--font-headline); }
+h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; color: var(--color-text); }
+h3 { font-size: 1.15rem; font-weight: 600; color: var(--color-text); }
+p { color: var(--color-muted); }
+a { color: var(--color-accent); text-decoration: none; transition: var(--transition); }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.btn-primary {
+  background: var(--color-accent);
+  color: #06090F;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover { background: color-mix(in srgb, var(--color-accent) 88%, #ffffff 12%); transform: translateY(-1px); box-shadow: var(--shadow-md); text-decoration: none; color: #06090F; }
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.btn-secondary:hover { background: var(--color-surface-2); text-decoration: none; color: var(--color-text); }
+
+/* Section spacing */
+section { padding-block: clamp(4.5rem, 9vw, 8rem); }
+
+/* ── HEADER ── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+header.scrolled { box-shadow: var(--shadow-md); border-color: color-mix(in srgb, #E8EDF5 22%, transparent); }
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+.logo {
+  font-family: var(--font-headline);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.logo span { color: var(--color-accent); }
+.logo:hover { text-decoration: none; color: var(--color-text); }
+
+nav.desktop-nav { display: none; }
+@media (min-width: 768px) {
+  nav.desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  nav.desktop-nav a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+  nav.desktop-nav a:hover { color: var(--color-text); }
+}
+.header-cta { display: none; }
+@media (min-width: 768px) { .header-cta { display: inline-flex; } }
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+@media (min-width: 768px) { .hamburger { display: none; } }
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.mobile-drawer {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem clamp(1.25rem, 5vw, 2rem) 1.5rem;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+.nav-open .mobile-drawer { display: flex; }
+.mobile-drawer a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-decoration: none;
+  padding: 0.25rem 0;
+}
+.mobile-drawer a:hover { color: var(--color-text); }
+.mobile-drawer .btn { align-self: flex-start; margin-top: 0.5rem; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  padding-block: clamp(5rem, 10vw, 8rem);
+  text-align: center;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%, color-mix(in srgb, #4DFFA3 10%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 0%, var(--color-accent-glow), transparent 60%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  max-width: 820px;
+  margin-inline: auto;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: color-mix(in srgb, #4DFFA3 10%, transparent);
+  border: 1px solid color-mix(in srgb, #4DFFA3 30%, transparent);
+  border-radius: 9999px;
+  padding: 0.35rem 0.875rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.04em;
+  animation: fadeInUp 0.5s ease-out both;
+}
+.hero-badge::before { content: '●'; font-size: 0.5rem; color: var(--color-accent); }
+.hero h1 {
+  font-size: clamp(2.5rem, 5.5vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+  animation: fadeInUp 0.5s ease-out 0.1s both;
+}
+.hero h1 em { font-style: normal; color: var(--color-accent); }
+.hero-sub {
+  font-size: 1.125rem;
+  color: var(--color-muted);
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.5s ease-out 0.2s both;
+}
+.hero-actions {
+  display: flex;
+  gap: 0.875rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.5s ease-out 0.3s both;
+}
+.hero-trust {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.5s ease-out 0.35s both;
+}
+.hero-trust span { color: var(--color-accent); font-weight: 600; }
+
+/* Product Mock */
+.product-mock {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  max-width: 680px;
+  margin-inline: auto;
+  animation: fadeInUp 0.5s ease-out 0.4s both;
+}
+.mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+.mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+.mock-dot:nth-child(1) { background: #FF6058; }
+.mock-dot:nth-child(2) { background: #FFBE2E; }
+.mock-dot:nth-child(3) { background: #2AC840; }
+.mock-url {
+  flex: 1;
+  height: 22px;
+  background: var(--color-primary-tint);
+  border-radius: 4px;
+  margin-left: 0.75rem;
+  border: 1px solid var(--color-border);
+}
+.mock-body { padding: 1.25rem; display: grid; gap: 0.75rem; }
+.mock-row { display: flex; gap: 0.75rem; align-items: center; }
+.mock-icon-box {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: color-mix(in srgb, #4DFFA3 12%, transparent);
+  border: 1px solid color-mix(in srgb, #4DFFA3 20%, transparent);
+  flex-shrink: 0;
+}
+.mock-lines { flex: 1; display: grid; gap: 0.35rem; }
+.mock-line {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-surface-2);
+}
+.mock-line.w80 { width: 80%; }
+.mock-line.w60 { width: 60%; }
+.mock-line.w90 { width: 90%; }
+.mock-line.w45 { width: 45%; }
+.mock-pill {
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+.mock-pill.green { background: color-mix(in srgb, #4DFFA3 18%, transparent); color: var(--color-accent); border: 1px solid color-mix(in srgb, #4DFFA3 28%, transparent); }
+.mock-pill.orange { background: color-mix(in srgb, #FFB347 18%, transparent); color: #FFB347; border: 1px solid color-mix(in srgb, #FFB347 28%, transparent); }
+.mock-pill.red { background: color-mix(in srgb, #FF6058 18%, transparent); color: #FF6058; border: 1px solid color-mix(in srgb, #FF6058 28%, transparent); }
+.mock-stats-row { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
+.mock-stat-card {
+  flex: 1;
+  background: var(--color-primary-tint);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.3rem;
+}
+.mock-stat-val { height: 14px; width: 50%; border-radius: 4px; background: color-mix(in srgb, #4DFFA3 30%, transparent); }
+.mock-stat-lbl { height: 7px; width: 70%; border-radius: 4px; background: var(--color-surface-2); }
+
+/* ── SOCIAL PROOF ── */
+.social-proof {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: 2.5rem;
+}
+.social-proof-stat {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.01em;
+}
+.social-proof-stat strong { color: var(--color-accent); }
+.logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+}
+.logo-word {
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0.04em;
+  opacity: 1;
+  transition: opacity var(--transition);
+}
+.logo-word:hover { opacity: 1; }
+
+/* ── PROBLEM / SOLUTION ── */
+.problem-solution { background: var(--color-bg); }
+.ps-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .ps-grid { grid-template-columns: 1fr 1fr; } }
+.ps-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(1.5rem, 4vw, 2rem);
+}
+.ps-card-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.875rem;
+}
+.label-problem { color: #FF6058; }
+.label-solution { color: var(--color-accent); }
+.ps-card h3 { font-size: 1.15rem; margin-bottom: 1.25rem; color: var(--color-text); }
+.ps-list { list-style: none; display: grid; gap: 0.875rem; }
+.ps-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+.ps-list li::before { flex-shrink: 0; margin-top: 0.2em; font-size: 1rem; }
+.problem-list li::before { content: '✕'; color: #FF6058; }
+.solution-list li::before { content: '✓'; color: var(--color-accent); font-weight: 700; }
+
+/* ── FEATURES ── */
+.features { background: var(--color-bg); }
+.features-header { text-align: center; max-width: 600px; margin-inline: auto; margin-bottom: 3rem; }
+.features-header p { margin-top: 0.75rem; }
+.features-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.feature-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.75rem;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.feature-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.icon-tile {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: color-mix(in srgb, #4DFFA3 10%, transparent);
+  border: 1px solid color-mix(in srgb, #4DFFA3 22%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.125rem;
+}
+.icon-tile svg { width: 22px; height: 22px; stroke: var(--color-accent); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.feature-card h3 { margin-bottom: 0.5rem; font-size: 1.05rem; }
+.feature-card p { font-size: 0.9rem; line-height: 1.6; }
+
+/* ── METRICS BAND ── */
+.metrics-band {
+  background: var(--color-secondary);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: clamp(3rem, 6vw, 5rem);
+  position: relative;
+  overflow: hidden;
+}
+.metrics-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, var(--color-accent-glow), transparent 70%);
+  pointer-events: none;
+}
+.metrics-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+.metric-item { position: relative; }
+.metric-item + .metric-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10%; bottom: 10%;
+  width: 1px;
+  background: var(--color-border);
+  display: none;
+}
+@media (min-width: 600px) { .metric-item + .metric-item::before { display: block; } }
+.metric-value {
+  font-family: var(--font-headline);
+  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--color-accent);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.metric-label {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin-top: 0.375rem;
+  font-weight: 500;
+}
+
+/* ── HOW IT WORKS ── */
+.how-it-works { background: var(--color-surface); }
+.how-header { text-align: center; max-width: 560px; margin-inline: auto; margin-bottom: 3.5rem; }
+.how-header p { margin-top: 0.75rem; }
+.steps-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: calc(12.5% + 24px);
+    right: calc(12.5% + 24px);
+    height: 1px;
+    background: var(--color-border);
+    z-index: 0;
+  }
+}
+.step {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1rem;
+}
+.step-badge {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: color-mix(in srgb, #4DFFA3 12%, transparent);
+  border: 2px solid color-mix(in srgb, #4DFFA3 30%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+  margin-bottom: 1.125rem;
+  font-family: var(--font-headline);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+.step h3 { font-size: 1rem; margin-bottom: 0.625rem; }
+.step p { font-size: 0.875rem; line-height: 1.6; }
+
+/* ── TESTIMONIALS ── */
+.testimonials { background: var(--color-bg); }
+.test-header { text-align: center; max-width: 560px; margin-inline: auto; margin-bottom: 3rem; }
+.test-header p { margin-top: 0.75rem; }
+.test-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.test-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.test-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.quote-mark {
+  font-family: Georgia, serif;
+  font-size: 3.5rem;
+  line-height: 0.8;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+.test-card blockquote {
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  line-height: 1.65;
+  font-style: normal;
+}
+.test-footer { display: flex; align-items: center; gap: 0.875rem; margin-top: auto; }
+.avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: color-mix(in srgb, #4DFFA3 15%, transparent);
+  border: 1px solid color-mix(in srgb, #4DFFA3 25%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-headline);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+.test-meta { font-size: 0.8125rem; }
+.test-name { font-weight: 700; color: var(--color-text); }
+.test-role { color: var(--color-muted); margin-top: 0.1rem; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding-block: clamp(5rem, 10vw, 9rem);
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 50%, color-mix(in srgb, #4DFFA3 9%, transparent), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, var(--color-accent-glow), transparent 65%);
+  pointer-events: none;
+}
+.final-cta-inner { position: relative; max-width: 640px; margin-inline: auto; }
+.final-cta h2 {
+  font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.final-cta p { margin-bottom: 2rem; font-size: 1rem; }
+.final-cta-actions { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.final-cta-link {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color var(--transition);
+}
+.final-cta-link:hover { color: var(--color-text); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--color-surface-2);
+  border-top: 1px solid var(--color-border);
+  padding-block: clamp(3rem, 6vw, 4.5rem) 2rem;
+}
+.footer-grid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) { .footer-grid { grid-template-columns: 1.4fr repeat(3, 1fr); } }
+.footer-brand p { font-size: 0.875rem; margin-top: 0.75rem; max-width: 220px; }
+.footer-col h4 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+.footer-col ul { list-style: none; display: grid; gap: 0.6rem; }
+.footer-col ul li a {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.footer-col ul li a:hover { color: var(--color-text); text-decoration: none; }
+.footer-bottom {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-copy { font-size: 0.8125rem; color: var(--color-muted); }
+.social-icons { display: flex; gap: 1rem; }
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  color: var(--color-muted);
+  transition: var(--transition);
+  text-decoration: none;
+}
+.social-icons a:hover { color: var(--color-accent); border-color: color-mix(in srgb, #4DFFA3 30%, transparent); }
+.social-icons svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ── NEWSLETTER STRIP ── */
+.newsletter {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+.newsletter-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+@media (min-width: 640px) {
+  .newsletter-inner {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+  }
+}
+.newsletter-text h3 { font-size: 1.25rem; margin-bottom: 0.35rem; }
+.newsletter-text p { font-size: 0.9rem; }
+.newsletter-form {
+  display: flex;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.newsletter-form input[type="email"] {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  width: 260px;
+  transition: border-color var(--transition);
+  outline: none;
+}
+.newsletter-form input::placeholder { color: var(--color-muted); }
+.newsletter-form input:focus { border-color: var(--color-accent); }
+
+/* Early access section anchor */
+#early-access { scroll-margin-top: 5rem; }
 </style>
 </head>
 <body>
-  <section class="hero">
-    <h1>UniPath Academic Intelligence Platform</h1>
-    <p>Coming soon. We're building something amazing.</p>
-    <a href="#contact" class="cta">Get Early Access</a>
-  </section>
+
+<!-- STICKY HEADER -->
+<header id="site-header">
+  <div class="container header-inner">
+    <a href="#" class="logo">Uni<span>Path</span></a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#about">About</a>
+      <a href="#blog">Blog</a>
+      <a href="#newsletter">Newsletter</a>
+    </nav>
+    <a href="#early-access" class="btn btn-primary header-cta" style="font-size:0.875rem;padding:0.6rem 1.1rem;">Claim Early Access</a>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#about">About</a>
+    <a href="#blog">Blog</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#early-access" class="btn btn-primary">Claim Early Access</a>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main>
+
+<!-- SECTION 2: HERO -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge">Pilot launching at UNIST, KAIST, POSTECH, DGIST</div>
+      <h1>Six Systems. <em>One Platform.</em> Zero Fragmentation.</h1>
+      <p class="hero-sub">UniPath automatically parses HWP syllabi, tracks u-SAINT and Blackboard deadlines, and guides your entire academic trajectory — in Korean and English.</p>
+      <div class="hero-actions">
+        <a href="#early-access" class="btn btn-primary">Claim Early Access</a>
+        <a href="#how-it-works" class="btn btn-secondary">See how it works</a>
+      </div>
+      <p class="hero-trust"><span>No credit card required.</span> University email only. Cancel any time before pilot ends.</p>
+      <!-- CSS-only product mock -->
+      <div class="product-mock" role="img" aria-label="UniPath dashboard preview">
+        <div class="mock-bar">
+          <div class="mock-dot"></div>
+          <div class="mock-dot"></div>
+          <div class="mock-dot"></div>
+          <div class="mock-url"></div>
+        </div>
+        <div class="mock-body">
+          <div class="mock-row">
+            <div class="mock-icon-box"></div>
+            <div class="mock-lines">
+              <div class="mock-line w80"></div>
+              <div class="mock-line w60"></div>
+            </div>
+            <div class="mock-pill green">On Track</div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box"></div>
+            <div class="mock-lines">
+              <div class="mock-line w90"></div>
+              <div class="mock-line w45"></div>
+            </div>
+            <div class="mock-pill orange">Due 24h</div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box"></div>
+            <div class="mock-lines">
+              <div class="mock-line w80"></div>
+              <div class="mock-line w60"></div>
+            </div>
+            <div class="mock-pill red">Overdue</div>
+          </div>
+          <div class="mock-stats-row">
+            <div class="mock-stat-card">
+              <div class="mock-stat-val"></div>
+              <div class="mock-stat-lbl"></div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="mock-stat-val"></div>
+              <div class="mock-stat-lbl"></div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="mock-stat-val"></div>
+              <div class="mock-stat-lbl"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SOCIAL PROOF -->
+<section class="social-proof" aria-label="Partner universities">
+  <div class="container">
+    <p class="social-proof-stat">Piloting with <strong>4 Korean science universities</strong> across <strong>12 departments</strong></p>
+    <div class="logos" role="list">
+      <span class="logo-word" role="listitem">UNIST</span>
+      <span class="logo-word" role="listitem">KAIST</span>
+      <span class="logo-word" role="listitem">POSTECH</span>
+      <span class="logo-word" role="listitem">DGIST</span>
+      <span class="logo-word" role="listitem">K-SW Square</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: PROBLEM / SOLUTION -->
+<section class="problem-solution" id="about" aria-labelledby="ps-heading">
+  <div class="container">
+    <h2 id="ps-heading" style="text-align:center;max-width:640px;margin-inline:auto;margin-bottom:2.5rem;">We built UniPath because Korean science students were losing hours every week</h2>
+    <div class="ps-grid">
+      <div class="ps-card">
+        <div class="ps-card-label label-problem">The Problem</div>
+        <h3>Korean science students lose hours daily to system fragmentation</h3>
+        <ul class="ps-list problem-list">
+          <li>I miss assignment deadlines buried across u-SAINT, Blackboard, and HWP syllabi I can't parse fast enough</li>
+          <li>I copy-paste schedules between KakaoTalk, Notion, and three university portals just to stay current</li>
+          <li>I miss research lab openings and exchange deadlines because no single system surfaces them to me</li>
+        </ul>
+      </div>
+      <div class="ps-card">
+        <div class="ps-card-label label-solution">The Solution</div>
+        <h3>One bilingual academic OS, built precisely for Korean science universities</h3>
+        <ul class="ps-list solution-list">
+          <li>Automatically aggregates u-SAINT, Blackboard, HWP syllabi, and lab directories into a single dashboard updated in real time</li>
+          <li>Proprietary Korean NLP extracts deadlines and maps courses to your degree requirements before you even open the syllabus</li>
+          <li>Surfaces research lab placements and exchange program windows aligned to your GPA, major, and academic timeline</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: FEATURES GRID -->
+<section class="features" id="features" aria-labelledby="features-heading">
+  <div class="container">
+    <div class="features-header">
+      <span class="eyebrow">Platform Capabilities</span>
+      <h2 id="features-heading">Every feature built for Korean science workflows</h2>
+      <p>From HWP parsing to PIPA compliance — UniPath handles what generic tools can't.</p>
+    </div>
+    <div class="features-grid">
+
+      <!-- Feature: Search / Parse HWP -->
+      <article class="feature-card">
+        <div class="icon-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/><path d="M11 8v6M8 11h6"/></svg>
+        </div>
+        <h3>Parse HWP syllabi instantly</h3>
+        <p>UniPath's Korean NLP engine reads HWP and PDF syllabi and extracts every deadline, grading weight, and lab session in under four seconds. Students spend zero minutes manually transcribing course requirements.</p>
+      </article>
+
+      <!-- Feature: Bolt / Deadlines -->
+      <article class="feature-card">
+        <div class="icon-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13H12l-1 9 8.5-11H12l1-9z"/></svg>
+        </div>
+        <h3>Eliminate missed deadlines automatically</h3>
+        <p>UniPath pulls live assignment data from both u-SAINT and Blackboard and surfaces a unified deadline feed sorted by urgency, not by portal. Pilot data targets a reduction in missed assignment rates from 35% to under 10%.</p>
+      </article>
+
+      <!-- Feature: Target / Lab Placement -->
+      <article class="feature-card">
+        <div class="icon-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        </div>
+        <h3>Accelerate research lab placement 2.4×</h3>
+        <p>The platform cross-references KAIST, POSTECH, UNIST, and DGIST lab directories against your transcript and research interests, then ranks openings by fit score. Students identified viable labs 2.4× faster than through manual outreach.</p>
+      </article>
+
+      <!-- Feature: Globe / Exchange -->
+      <article class="feature-card">
+        <div class="icon-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9"/></svg>
+        </div>
+        <h3>Complete exchange applications 65% faster</h3>
+        <p>UniPath pre-fills exchange program forms using verified academic records from your SSO-authenticated profile and flags missing documents before deadlines close. Early testers completed full application packages in 3.1 hours instead of 8.7.</p>
+      </article>
+
+      <!-- Feature: Lock / SSO -->
+      <article class="feature-card">
+        <div class="icon-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.5"/></svg>
+        </div>
+        <h3>Authenticate once via university SSO</h3>
+        <p>UNIST, KAIST, POSTECH, and DGIST SSO credentials log students into every connected system through a single sign-on — no duplicate accounts, no password resets. IT offices retain full session control and audit-log access.</p>
+      </article>
+
+      <!-- Feature: Shield / PIPA -->
+      <article class="feature-card">
+        <div class="icon-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Meet PIPA standards precisely</h3>
+        <p>All student data is stored on Korean-domestic servers, encrypted at rest with AES-256, and processed under PIPA-compliant data handling agreements signed with each partner institution. University IT administrators receive a dedicated compliance dashboard.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: METRICS BAND -->
+<section class="metrics-band" aria-labelledby="metrics-heading">
+  <div class="container">
+    <h2 id="metrics-heading" style="text-align:center;margin-bottom:2.5rem;font-size:clamp(1.25rem,2.5vw,1.625rem);color:var(--color-muted);font-weight:600;letter-spacing:0.02em;" class="eyebrow">Measured outcomes from pilot data</h2>
+    <div class="metrics-grid" role="list">
+      <div class="metric-item" role="listitem">
+        <div class="metric-value">35% → &lt;10%</div>
+        <div class="metric-label">Missed assignment rate reduction</div>
+      </div>
+      <div class="metric-item" role="listitem">
+        <div class="metric-value">2.4×</div>
+        <div class="metric-label">Faster research lab placement</div>
+      </div>
+      <div class="metric-item" role="listitem">
+        <div class="metric-value">65%</div>
+        <div class="metric-label">Exchange application completion lift</div>
+      </div>
+      <div class="metric-item" role="listitem">
+        <div class="metric-value">4 sec</div>
+        <div class="metric-label">HWP syllabus parsed</div>
+      </div>
+      <div class="metric-item" role="listitem">
+        <div class="metric-value">6 → 1</div>
+        <div class="metric-label">Fragmented systems consolidated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works" aria-labelledby="how-heading">
+  <div class="container">
+    <div class="how-header">
+      <span class="eyebrow">How UniPath Works</span>
+      <h2 id="how-heading">From sign-in to full academic clarity in minutes</h2>
+      <p>Four steps. No manual setup. No more juggling portals.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-badge" aria-hidden="true">1</div>
+        <h3>Connect your university account</h3>
+        <p>Sign in once with your UNIST, KAIST, POSTECH, or DGIST SSO credentials. UniPath instantly authenticates and pulls your enrolled courses, pending assignments, and official academic calendar from u-SAINT and Blackboard.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge" aria-hidden="true">2</div>
+        <h3>Let AI read your syllabi</h3>
+        <p>Upload or link your HWP and PDF syllabi and UniPath's Korean NLP engine extracts every deadline, assessment weight, and prerequisite within seconds. Your unified academic timeline is built automatically — no manual entry required.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge" aria-hidden="true">3</div>
+        <h3>Track deadlines across every system</h3>
+        <p>A single bilingual dashboard displays all assignments, lab sessions, and administrative deadlines ranked by urgency and cross-referenced between u-SAINT and Blackboard in real time. Alerts fire precisely 72 hours and 24 hours before each deadline.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge" aria-hidden="true">4</div>
+        <h3>Discover labs and exchange programs</h3>
+        <p>UniPath surfaces research lab openings and exchange program windows matched to your major, GPA tier, and stated research interests — ranked by fit score and sorted by application deadline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: TESTIMONIALS -->
+<section class="testimonials" id="testimonials" aria-labelledby="test-heading">
+  <div class="container">
+    <div class="test-header">
+      <span class="eyebrow">Student &amp; Faculty Voices</span>
+      <h2 id="test-heading">Early users ship sharper, faster</h2>
+      <p>Pilot participants from KAIST, POSTECH, and UNIST on what changed first.</p>
+    </div>
+    <div class="test-grid">
+
+      <article class="test-card">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <blockquote>I used to spend 40 minutes every Sunday manually reconciling deadlines across three portals. With UniPath, that dropped to under four minutes and I haven't missed a single submission in eleven weeks.</blockquote>
+        <footer class="test-footer">
+          <div class="avatar" aria-hidden="true">JK</div>
+          <div class="test-meta">
+            <div class="test-name">Ji-hoon Kwon</div>
+            <div class="test-role">MSc Electrical Engineering · KAIST</div>
+          </div>
+        </footer>
+      </article>
+
+      <article class="test-card">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <blockquote>UniPath parsed my entire semester's HWP syllabi in 18 seconds and mapped every assignment to my degree audit automatically. I found a qualifying research lab placement in six days — it took my labmate three months doing it manually.</blockquote>
+        <footer class="test-footer">
+          <div class="avatar" aria-hidden="true">SP</div>
+          <div class="test-meta">
+            <div class="test-name">Soomin Park</div>
+            <div class="test-role">PhD Candidate, Materials Science · POSTECH</div>
+          </div>
+        </footer>
+      </article>
+
+      <article class="test-card">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <blockquote>Our IT office evaluated three LMS integration tools before UniPath. It was the only platform that met PIPA data-residency requirements out of the box and delivered SSO log integration in under two weeks of pilot setup.</blockquote>
+        <footer class="test-footer">
+          <div class="avatar" aria-hidden="true">YL</div>
+          <div class="test-meta">
+            <div class="test-name">Dr. Yeonsoo Lim</div>
+            <div class="test-role">Head of Academic IT Infrastructure · UNIST</div>
+          </div>
+        </footer>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="newsletter" aria-labelledby="newsletter-heading">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <span class="eyebrow" style="margin-bottom:0.5rem;">Stay in the loop</span>
+        <h3 id="newsletter-heading">Get UniPath updates &amp; launch news</h3>
+        <p>Pilot dispatches, feature releases, and student guides — delivered monthly.</p>
+      </div>
+      <form class="newsletter-form" action="#" method="post" aria-label="Newsletter sign-up">
+        <label for="nl-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Email address</label>
+        <input type="email" id="nl-email" name="email" placeholder="your@university.ac.kr" required autocomplete="email">
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: FINAL CTA -->
+<section class="final-cta" id="early-access" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="final-cta-inner">
+      <span class="eyebrow">Early Access — Limited Slots</span>
+      <h2 id="cta-heading">Pilot slots are limited — secure yours before launch</h2>
+      <p>No credit card required. University email sign-up only. Cancel before pilot ends at no cost.</p>
+      <div class="final-cta-actions">
+        <a href="#" class="btn btn-primary" style="font-size:1rem;padding:0.875rem 2rem;">Claim Early Access Now</a>
+        <a href="#how-it-works" class="final-cta-link">See how UniPath works ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- SECTION 10: FOOTER -->
+<footer id="blog" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo">Uni<span>Path</span></span>
+        <p>One AI OS for Korean science universities. Built for UNIST, KAIST, POSTECH, and DGIST.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#early-access">Early Access</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">PIPA Compliance</a></li>
+          <li><a href="#">Data Residency</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 UniPath. All rights reserved. Built for Korean science universities.</p>
+      <div class="social-icons" aria-label="Social media links">
+        <a href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+        </a>
+        <a href="#" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var header = document.getElementById('site-header');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  }, {passive: true});
+
+  var btn = document.getElementById('hamburger-btn');
+  btn.addEventListener('click', function(){
+    var open = document.body.classList.toggle('nav-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  document.querySelectorAll('.mobile-drawer a').forEach(function(link){
+    link.addEventListener('click', function(){
+      document.body.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
 </body>
 </html>
